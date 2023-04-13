@@ -10,7 +10,7 @@ With this you have to paste in a node you want to use, this can be any node with
 > You can only use the same type of credentials as the original one set in the node that is pasted in.
 > Be sure to enter credentials, so the node know which credentials need to be replaced. Without credentials set, the node cannot determine the credentialtype name and therefore cannot set it.
 
-![NodeExample](https://github.com/bramkn/n8n-nodes-run-node-with-credentials/blob/master/img/crdentialsNodeImg.png)
+![NodeExample](https://github.com/bramkn/n8n-nodes-run-node-with-credentials/blob/master/img/credentialsNodeImg.png)
 
 ## Developer
 
