@@ -3,6 +3,12 @@
 
 # n8n-nodes-run-node-with-credentials-x
 
+The node allows you to dynamically set the credentials to be used for a specific node you want to run.
+With this you have to paste in a node you want to use, this can be any node with any parameters set. By then also entering the credentials ID the node is ran with those credentials.
+
+> **Warning**
+> You can only use the same type of credentials as the original one set in the node that is pasted in.
+> Be sure to enter credentials, so the node know which credentials need to be replaced. Without credentials set, the node cannot determine the credentialtype name and therefore cannot set it.
 
 ## Developer
 
