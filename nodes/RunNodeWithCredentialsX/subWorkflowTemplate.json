@@ -1,0 +1,28 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "dacc52e8-fef9-4cc3-9fca-623fa81b3c5f",
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        720,
+        340
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
