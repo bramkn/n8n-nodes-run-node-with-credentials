@@ -31,7 +31,7 @@ export class RunNodeWithCredentialsX implements INodeType {
 				type: 'number',
 				default: 0,
 				required: true,
-				description: 'Id of the credentials to use',
+				description: 'ID of the credentials to use',
 			},
 			{
 				displayName: 'Node To Execute',
