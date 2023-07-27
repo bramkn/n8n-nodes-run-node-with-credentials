@@ -12,6 +12,12 @@
       ]
     }
   ],
+	"settings":{
+		"saveManualExecutions":false,
+		"saveExecutionProgress":false,
+		"saveDataErrorExecution": "none",
+		"saveDataSuccessExecution": "none"
+	},
   "connections": {
     "Start": {
       "main": [
