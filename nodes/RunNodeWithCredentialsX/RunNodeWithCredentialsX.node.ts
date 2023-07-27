@@ -51,14 +51,10 @@ export class RunNodeWithCredentialsX implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 
-		let item: INodeExecutionData;
-
-		for (let itemIndex = 0; itemIndex < 1; itemIndex++) {
 			try {
-				item = items[itemIndex];
 				const workflowInfo: IExecuteWorkflowInfo = {};
-				const nodeJson = this.getNodeParameter('nodeJson', itemIndex, '') as string;
-				const credentialsId = this.getNodeParameter('credentialsId', itemIndex, 0) as number;
+				const nodeJson = this.getNodeParameter('nodeJson', 0, '') as string;
+				const credentialsId = this.getNodeParameter('credentialsId', 0, 0) as number;
 				let nodeParsed;
 				try{
 					nodeParsed = JSON.parse(nodeJson);
@@ -78,9 +74,7 @@ export class RunNodeWithCredentialsX implements INodeType {
 						];
 					}
 					else{
-						throw new NodeOperationError(this.getNode(), 'There are no credentials in the node that is entered.', {
-							itemIndex,
-						});
+						throw new NodeOperationError(this.getNode(), 'There are no credentials in the node that is entered.');
 					}
 
 					const nodeName = nodeParsed.name;
@@ -90,35 +84,31 @@ export class RunNodeWithCredentialsX implements INodeType {
 
 					workflowInfo.code = template as IWorkflowBase;
 
-					const receivedData = await this.executeWorkflow(workflowInfo, [item]);
+					const receivedData = await this.executeWorkflow(workflowInfo, items);
 					return receivedData;
 
 				}
 				catch(error){
-					throw new NodeOperationError(this.getNode(), error, {
-						itemIndex,
-					});
+					throw new NodeOperationError(this.getNode(), error);
 				}
 
 			} catch (error) {
 				// This node should never fail but we want to showcase how
 				// to handle errors.
 				if (this.continueOnFail()) {
-					items.push({ json: this.getInputData(itemIndex)[0].json, error, pairedItem: itemIndex });
+					items.push({ json: this.getInputData(0)[0].json, error, pairedItem: 0 });
 				} else {
 					// Adding `itemIndex` allows other workflows to handle this error
 					if (error.context) {
 						// If the error thrown already contains the context property,
 						// only append the itemIndex
-						error.context.itemIndex = itemIndex;
+						error.context.itemIndex = 0;
 						throw error;
 					}
-					throw new NodeOperationError(this.getNode(), error, {
-						itemIndex,
-					});
+					throw new NodeOperationError(this.getNode(), error);
 				}
 			}
-		}
+
 
 		return this.prepareOutputData(items);
 	}
