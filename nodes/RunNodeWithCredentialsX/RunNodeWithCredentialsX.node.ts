@@ -36,14 +36,10 @@ export class RunNodeWithCredentialsX implements INodeType {
 			{
 				displayName: 'Node To Execute',
 				name: 'nodeJson',
-				type: 'string',
-				default: '\n\n\n',
+				type: 'json',
 				required: true,
+				default: '',
 				description: 'JSON of the node to Execute',
-				typeOptions: {
-					editor: 'json',
-					rows: 20,
-				},
 			},
 		],
 	};
