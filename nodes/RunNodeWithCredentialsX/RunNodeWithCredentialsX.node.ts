@@ -1,10 +1,11 @@
-import { IExecuteFunctions } from 'n8n-core';
 import {
 	IExecuteWorkflowInfo,
+	IExecuteFunctions,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 	IWorkflowBase,
+	NodeConnectionType,
 	NodeOperationError,
 } from 'n8n-workflow';
 
@@ -22,14 +23,16 @@ export class RunNodeWithCredentialsX implements INodeType {
 		defaults: {
 			name: 'Run Node WIth Credentials X',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		// eslint-disable-next-line n8n-nodes-base/node-class-description-inputs-wrong-regular-node
+		inputs: [NodeConnectionType.Main],
+		// eslint-disable-next-line n8n-nodes-base/node-class-description-outputs-wrong
+		outputs: [NodeConnectionType.Main],
 		properties: [
 			{
 				displayName: 'Credentials ID',
 				name: 'credentialsId',
-				type: 'number',
-				default: 0,
+				type: 'string',
+				default: '',
 				required: true,
 				description: 'ID of the credentials to use',
 			},
@@ -51,6 +54,7 @@ export class RunNodeWithCredentialsX implements INodeType {
 				const workflowInfo: IExecuteWorkflowInfo = {};
 				const nodeJson = this.getNodeParameter('nodeJson', 0, '') as string;
 				const credentialsId = this.getNodeParameter('credentialsId', 0, 0) as number;
+				const workflowProxy = this.getWorkflowDataProxy(0);
 				let nodeParsed;
 				try{
 					nodeParsed = JSON.parse(nodeJson);
@@ -80,7 +84,19 @@ export class RunNodeWithCredentialsX implements INodeType {
 
 					workflowInfo.code = template as IWorkflowBase;
 
-					const receivedData = await this.executeWorkflow(workflowInfo, items);
+					const executionResult = await this.executeWorkflow(
+						workflowInfo,
+						items,
+						undefined,
+							{
+								doNotWaitToFinish: false,
+								parentExecution: {
+									executionId: workflowProxy.$execution.id,
+									workflowId: workflowProxy.$workflow.id,
+								},
+							},
+					);
+					const receivedData = executionResult.data as INodeExecutionData[][];
 					return receivedData;
 
 				}
