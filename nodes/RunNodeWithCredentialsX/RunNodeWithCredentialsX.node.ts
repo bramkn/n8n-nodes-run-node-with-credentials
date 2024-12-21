@@ -53,7 +53,7 @@ export class RunNodeWithCredentialsX implements INodeType {
 			try {
 				const workflowInfo: IExecuteWorkflowInfo = {};
 				const nodeJson = this.getNodeParameter('nodeJson', 0, '') as string;
-				const credentialsId = this.getNodeParameter('credentialsId', 0, 0) as number;
+				const credentialsId = this.getNodeParameter('credentialsId', 0, '') as string;
 				const workflowProxy = this.getWorkflowDataProxy(0);
 				let nodeParsed;
 				try{
